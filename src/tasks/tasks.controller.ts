@@ -1,22 +1,40 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import type { Request } from 'express';
+import { UseGuards, Body, Controller, Get, Param, Put, Post, Req, UnauthorizedException } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-
+import { AuthGuard } from '../auth/auth.guard'
 @Controller('tasks')
 export class TasksController {
     constructor(private readonly tasksService: TasksService) {}
 
+    
     @Get('')
-    async listTasks() {
-        return this.tasksService.listTasks();
+    @UseGuards(AuthGuard)
+    async listTasks(@Req() req: Request) {
+        const userId = req.user?.id
+        console.dir(req.user, {depth: null})
+        return this.tasksService.listTasks(userId);
     }
 
     @Get('/:id')
-    async getTask(@Param('id') id: string) {
-        return this.tasksService.getTask(id);
+    @UseGuards(AuthGuard)
+    async getTask(@Param('id') id: string, @Req() req: Request) {
+        const userId = req.user?.id
+
+        if (!userId) {
+            throw new UnauthorizedException('User not authenticated');
+        }
+        
+        return this.tasksService.getTask(id, userId);
     }
 
-    @Post('/edit')
-    async editTask(@Body() body) {
-        return this.tasksService.editTask(body);
+    @Put('/:id')
+    @UseGuards(AuthGuard)
+    async editTask(@Param('id') id:string, @Body() body, @Req() req: Request) {
+        const userId = req.user?.id;
+        console.log(userId)
+        if (!userId) {
+            throw new UnauthorizedException('User not authenticated');
+        }
+        return this.tasksService.editTask(id, body, userId);
     }
 }

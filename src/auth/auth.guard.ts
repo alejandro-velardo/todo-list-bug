@@ -3,6 +3,7 @@ import {
     ExecutionContext,
     Injectable,
     UnauthorizedException,
+    Logger
 } from '@nestjs/common';
 import { jwtConstants } from './constants';
 import { IS_PUBLIC_KEY } from './is-public.decorator';
@@ -16,7 +17,11 @@ export class AuthGuard implements CanActivate {
         private reflector: Reflector,
     ) {}
 
+    private readonly logger = new Logger(AuthGuard.name);
+    
     async canActivate(context: ExecutionContext): Promise<boolean> {
+        this.logger.log('AuthGuard activated'); 
+
         const isPublic = this.reflector.getAllAndOverride<boolean>(
             IS_PUBLIC_KEY,
             [context.getHandler(), context.getClass()],

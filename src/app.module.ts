@@ -10,7 +10,7 @@ import path from 'node:path';
     imports: [
         TypeOrmModule.forRoot({
             type: 'sqlite',
-            database: path.resolve(__dirname, '../../db/db.sqlite'),
+            database: 'db/db.sqlite',
             autoLoadEntities: true,
         }),
         TasksModule,

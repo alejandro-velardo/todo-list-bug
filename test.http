@@ -1,0 +1,94 @@
+
+### Normal GEt
+GET http://localhost:3000/
+
+### Failed Login
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "foo",
+  "pass": "bar"
+}
+
+### Get access token
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "francisca_villagomezrobledo62@yahoo.com",
+  "pass": "4LDFVpwLcgwgY8t"
+}
+
+
+### Get user's task
+
+GET http://localhost:3000/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM2MDA1LCJleHAiOjE3NTM3Mzk2MDV9.xXaFw_Rd8bvXfQcIhQbLgSHk0ZTAP9D2I9IFuG4oQLk
+Content-Type: application/json
+
+### Get user's task unauthorized
+
+GET http://localhost:3000/tasks
+Authorization: Bearer notAToken
+Content-Type: application/json
+
+### See a user's task
+
+GET http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Content-Type: application/json
+
+### See a user's: task unauthorized
+
+GET http://localhost:3000/tasks/a6a0de01-514d-474d-99a6-076bb69d852d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Content-Type: application/json
+
+### See a user's: task not found
+
+GET http://localhost:3000/tasks/1234
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Content-Type: application/json
+
+### Edit a user's task 
+PUT http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Content-Type: application/json
+
+{
+  "title": "This is a updated  task",
+  "description": "This is a test to update a task that should be authorized by the backend"
+}
+
+### Edit a user's task: unauthorized
+PUT http://localhost:3000/tasks/a6a0de01-514d-474d-99a6-076bb69d852d
+Authorization: Bearer notAToken
+Content-Type: application/json
+
+{
+  "title": "This is a updated  task",
+  "description": "This is a test to update a task that should be authorized by the backend"
+}
+
+### Edit a user's task: not found
+PUT http://localhost:3000/tasks/notAnId
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Content-Type: application/json
+
+{
+  "title": "This is a updated  task",
+  "description": "This is a test to update a task that should be authorized by the backend"
+}
+
+### Create a user
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "email": "alejandro.velardo@bibops.com",
+  "pass": "1234",
+  "fullname": "Alejandro Velardo Lucero"
+}
