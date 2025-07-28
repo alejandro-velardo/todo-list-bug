@@ -18,15 +18,15 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "francisca_villagomezrobledo62@yahoo.com",
-  "pass": "4LDFVpwLcgwgY8t"
+  "email": "avelardo@bibops.com",
+  "pass": "@Th3P4ssw0rdF0rB1b0ps"
 }
 
 
 ### Get user's task
 
 GET http://localhost:3000/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM2MDA1LCJleHAiOjE3NTM3Mzk2MDV9.xXaFw_Rd8bvXfQcIhQbLgSHk0ZTAP9D2I9IFuG4oQLk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVmNTFjMDk0LTE2ZjEtNDkxNC04ZDBiLTVhZmU1Zjg0Y2NhNyIsImVtYWlsIjoiYXZlbGFyZG9AYmlib3BzLmNvbSIsImlhdCI6MTc1Mzc0MTA0NiwiZXhwIjoxNzUzNzQ0NjQ2fQ.Dfh99yRu22760biMyEwXzEAp6sZ2aoxf-iJ3f7H1ehY
 Content-Type: application/json
 
 ### Get user's task unauthorized
@@ -38,7 +38,7 @@ Content-Type: application/json
 ### See a user's task
 
 GET http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM5Nzc5LCJleHAiOjE3NTM3NDMzNzl9.j4QXBzLOP8JFWhVIDBkY1cevJMe9O86dpQUls4SNhbw
 Content-Type: application/json
 
 ### See a user's: task unauthorized
@@ -55,11 +55,22 @@ Content-Type: application/json
 
 ### Edit a user's task 
 PUT http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM5Nzc5LCJleHAiOjE3NTM3NDMzNzl9.j4QXBzLOP8JFWhVIDBkY1cevJMe9O86dpQUls4SNhbw
 Content-Type: application/json
 
 {
-  "title": "This is a updated  task",
+  "title": "This is test",
+  "description": "This is a test to update a task that should be authorized by the backend"
+}
+
+### Edit a user's task: bad Input
+PUT http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM5Nzc5LCJleHAiOjE3NTM3NDMzNzl9.j4QXBzLOP8JFWhVIDBkY1cevJMe9O86dpQUls4SNhbw
+Content-Type: application/json
+
+{
+  "title": "This is test",
+  "dueDate": "2025-10-10",
   "description": "This is a test to update a task that should be authorized by the backend"
 }
 
@@ -83,12 +94,54 @@ Content-Type: application/json
   "description": "This is a test to update a task that should be authorized by the backend"
 }
 
-### Create a user
+### Create a new user: too simple password
 POST http://localhost:3000/users/create
 Content-Type: application/json
 
 {
-  "email": "alejandro.velardo@bibops.com",
+  "email": "avelardo@bibops.com",
   "pass": "1234",
   "fullname": "Alejandro Velardo Lucero"
 }
+
+### Create a new user: missing fullname
+
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "email": "avelardo@bibops.com",
+  "pass": "@Th3P4ssw0rdF0rB1b0ps"
+}
+
+### Create a new user: wrong email
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "email": "avelardobibops.com",
+  "pass": "@Th3P4ssw0rdF0rB1b0ps",
+  "fullname": "Alejandro Velardo Lucero"
+}
+
+### Create a new user
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "email": "avelardo@bibops.com",
+  "pass": "@Th3P4ssw0rdF0rB1b0ps",
+  "fullname": "Alejandro Velardo Lucero"
+}
+
+### Create a new user: repeated email
+POST http://localhost:3000/users/create
+Content-Type: application/json
+
+{
+  "email": "avelardo@bibops.com",
+  "pass": "@Th3P4ssw0rdF0rB1b0ps",
+  "fullname": "Alejandro Velardo Lucero"
+}
+
+

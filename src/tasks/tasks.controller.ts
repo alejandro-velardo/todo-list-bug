@@ -2,6 +2,7 @@ import type { Request } from 'express';
 import { UseGuards, Body, Controller, Get, Param, Put, Post, Req, UnauthorizedException } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { AuthGuard } from '../auth/auth.guard'
+import { UpdateTaskDto } from './dto/update-task.dto';
 @Controller('tasks')
 export class TasksController {
     constructor(private readonly tasksService: TasksService) {}
@@ -29,12 +30,12 @@ export class TasksController {
 
     @Put('/:id')
     @UseGuards(AuthGuard)
-    async editTask(@Param('id') id:string, @Body() body, @Req() req: Request) {
+    async editTask(@Param('id') id:string, @Body() updateTaskDto: UpdateTaskDto, @Req() req: Request) {
         const userId = req.user?.id;
-        console.log(userId)
+
         if (!userId) {
             throw new UnauthorizedException('User not authenticated');
         }
-        return this.tasksService.editTask(id, body, userId);
+        return this.tasksService.editTask(id, updateTaskDto, userId);
     }
 }

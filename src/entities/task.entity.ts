@@ -1,23 +1,34 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from './user.entity';
-
-@Entity('tasks')
-export class Task {
+import {
+    Column,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    JoinColumn,
+  } from 'typeorm';
+  import { User } from './user.entity';
+  
+  @Entity('tasks')
+  export class Task {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
-    @Column()
+  
+    @Column({ length: 255 })
     title: string;
-
-    @Column()
+  
+    @Column({ length: 1000 })
     description: string;
-
-    @Column()
+  
+    @Column({ default: false })
     done: boolean;
-
-    @Column()
-    dueDate: string;
-
-    @ManyToOne(() => User, (user) => user.tasks)
+  
+    @Column({ type: 'date' })
+    dueDate: Date;
+  
+    @ManyToOne(() => User, (user) => user.tasks, { eager: false })
+    @JoinColumn({ name: 'ownerId' })
     owner: User;
-}
+  
+    @Column()
+    ownerId: string;  // Esto permite hacer queries directas sin cargar toda la entidad owner
+  }
+  
