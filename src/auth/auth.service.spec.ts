@@ -39,7 +39,7 @@ describe('AuthService', () => {
         jest.spyOn(usersService, 'findOne').mockResolvedValue(null);
 
         await expect(
-            service.signIn('test@example.com', 'password'),
+            service.signIn({email: 'test@example.com', pass: 'password'}),
         ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -53,7 +53,7 @@ describe('AuthService', () => {
         });
 
         await expect(
-            service.signIn('test@example.com', 'password'),
+            service.signIn({email: 'test@example.com', pass: 'password'}),
         ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -70,7 +70,7 @@ describe('AuthService', () => {
         jest.spyOn(usersService, 'findOne').mockResolvedValue(user);
         jest.spyOn(jwtService, 'signAsync').mockResolvedValue(token);
 
-        const result = await service.signIn('test@example.com', 'password');
+        const result = await service.signIn({email: 'test@example.com', pass: 'password'});
 
         expect(result).toEqual({ access_token: token });
     });

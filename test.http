@@ -1,10 +1,14 @@
 
+@baseUrl = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5YmY1MDliLTAxYzUtNDFkYy1iMWVmLWY5ODRlYjU1MWM4ZCIsImVtYWlsIjoiZXN0ZXJfdmFsbGFkYXJlc2FiZXl0YUBnbWFpbC5jb20iLCJpYXQiOjE3NTM4MDU0NjgsImV4cCI6MTc1MzgwOTA2OH0.14UTEnMCvjGIcdVMVQOXqLJVlZYJJp_qkiXEaRnS5xw
+@taskId = 603fab3b-70fd-4948-9b80-8fa063395eaa
+
 ### Normal GEt
-GET http://localhost:3000/
+GET {{baseUrl}}
 
-### Failed Login
+### Failed Login: user not found
 
-POST http://localhost:3000/auth/login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
@@ -12,50 +16,68 @@ Content-Type: application/json
   "pass": "bar"
 }
 
-### Get access token
+### Failed Login: invalid credentials
 
-POST http://localhost:3000/auth/login
+POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "avelardo22@bibops.com",
-  "pass": "@Th3P4ssw0rdF0rB1b0ps"
+  "email": "ester_valladaresabeyta@gmail.com",
+  "pass": ""
 }
 
+### Failed Login: wrong dto
+
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "pass": ""
+}
+
+### Get access token
+
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "ester_valladaresabeyta@gmail.com",
+  "pass": "ZGygwZJWpjkpH5_"
+}
 
 ### Get user's task
 
-GET http://localhost:3000/tasks
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVmNTFjMDk0LTE2ZjEtNDkxNC04ZDBiLTVhZmU1Zjg0Y2NhNyIsImVtYWlsIjoiYXZlbGFyZG9AYmlib3BzLmNvbSIsImlhdCI6MTc1Mzc0MTA0NiwiZXhwIjoxNzUzNzQ0NjQ2fQ.Dfh99yRu22760biMyEwXzEAp6sZ2aoxf-iJ3f7H1ehY
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### Get user's task unauthorized
 
-GET http://localhost:3000/tasks
+GET {{baseUrl}}/tasks
 Authorization: Bearer notAToken
 Content-Type: application/json
 
 ### See a user's task
 
-GET http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM5Nzc5LCJleHAiOjE3NTM3NDMzNzl9.j4QXBzLOP8JFWhVIDBkY1cevJMe9O86dpQUls4SNhbw
+GET {{baseUrl}}/tasks/{{taskId}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### See a user's: task unauthorized
 
 GET http://localhost:3000/tasks/a6a0de01-514d-474d-99a6-076bb69d852d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Authorization: Bearer notAtoken
 Content-Type: application/json
 
 ### See a user's: task not found
 
 GET http://localhost:3000/tasks/1234
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 ### Edit a user's task 
-PUT http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM5Nzc5LCJleHAiOjE3NTM3NDMzNzl9.j4QXBzLOP8JFWhVIDBkY1cevJMe9O86dpQUls4SNhbw
+PUT http://localhost:3000/tasks/{{taskId}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -63,30 +85,30 @@ Content-Type: application/json
   "description": "This is a test to update a task that should be authorized by the backend"
 }
 
-### Edit a user's task: bad Input
-PUT http://localhost:3000/tasks/7708aecc-0324-4f21-82d4-148bdf127261
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM5Nzc5LCJleHAiOjE3NTM3NDMzNzl9.j4QXBzLOP8JFWhVIDBkY1cevJMe9O86dpQUls4SNhbw
+### Edit a user's task: bad input
+PUT http://localhost:3000/tasks/{{taskId}}
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
   "title": "This is test",
-  "dueDate": "2025-10-10",
+  "dueDate": "2025-01-10",
   "description": "This is a test to update a task that should be authorized by the backend"
 }
 
 ### Edit a user's task: unauthorized
-PUT http://localhost:3000/tasks/a6a0de01-514d-474d-99a6-076bb69d852d
+PUT http://localhost:3000/tasks/{{taskId}}
 Authorization: Bearer notAToken
 Content-Type: application/json
 
 {
   "title": "This is a updated  task",
-  "description": "This is a test to update a task that should be authorized by the backend"
+  "description": "This is a test to update a task that should NOT be authorized by the backend"
 }
 
 ### Edit a user's task: not found
 PUT http://localhost:3000/tasks/notAnId
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE3MTAxNDNjLWJlZDUtNDAyOS05NGNkLTllOTRjMzliZmUzMiIsImVtYWlsIjoiZnJhbmNpc2NhX3ZpbGxhZ29tZXpyb2JsZWRvNjJAeWFob28uY29tIiwiaWF0IjoxNzUzNzM0MzczLCJleHAiOjE3NTM3Mzc5NzN9.Vc1T6PqRfCaGdUVIVypoGxgjigbSF6AXb9pHyb181LY
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -100,11 +122,11 @@ Content-Type: application/json
 
 {
   "email": "avelardo22@bibops.com",
-  "pass": "@Th3P4ssw0rdF0rB1b0ps",
+  "pass": "1234",
   "fullname": "Alejandro Velardo Lucero"
 }
 
-### Create a new user: missing fullname
+### Create a new user: bad dto fullname
 
 POST http://localhost:3000/users/create
 Content-Type: application/json
@@ -114,7 +136,7 @@ Content-Type: application/json
   "pass": "@Th3P4ssw0rdF0rB1b0ps"
 }
 
-### Create a new user: wrong email
+### Create a new user: bad dto email
 POST http://localhost:3000/users/create
 Content-Type: application/json
 
@@ -125,11 +147,11 @@ Content-Type: application/json
 }
 
 ### Create a new user
-POST http://localhost:3000/users/create
+POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardo@bibops.com",
+  "email": "@gmail.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps",
   "fullname": "Alejandro Velardo Lucero"
 }
