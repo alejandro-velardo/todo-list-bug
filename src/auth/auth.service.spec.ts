@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcryptjs'; // importa bcryptjs
+
 
 describe('AuthService', () => {
     let service: AuthService;
@@ -59,7 +61,7 @@ describe('AuthService', () => {
         const user = {
             id: '1',
             email: 'test@example.com',
-            pass: 'password',
+            pass: await bcrypt.hash('password', 10),
             fullname: 'Test User',
             tasks: [],
         };

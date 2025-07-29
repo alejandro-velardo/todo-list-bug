@@ -1,7 +1,10 @@
-import 'express';
+// src/types/express.d.ts
+import { User } from '../entities/user.entity';
 
-declare module 'express' {
-  export interface Request {
-    user?: { id: string; email: string; [key: string]: any };
+declare global {
+  namespace Express {
+    interface Request {
+      user?: Partial<User> & { id: string };
+    }
   }
 }

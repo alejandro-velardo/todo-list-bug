@@ -1,10 +1,12 @@
-import { Injectable, ForbiddenException, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, ForbiddenException, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from '../entities/task.entity';
 import { Repository } from 'typeorm';
 import { UpdateTaskDto } from './dto/update-task.dto'
 @Injectable()
 export class TasksService {
+    private readonly logger = new Logger(TasksService.name);
+
     constructor(
         @InjectRepository(Task)
         private readonly tasksRepository: Repository<Task>,
@@ -16,7 +18,7 @@ export class TasksService {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         if (date < today) {
-            throw new BadRequestException('La fecha de vencimiento no puede ser anterior a hoy');
+            throw new BadRequestException('dueDate cannot be before today');
         }
     }
 
@@ -30,11 +32,13 @@ export class TasksService {
         });
 
         if (!task) {
-            throw new NotFoundException('Task not found');
+            this.logger.log(`Task with task id: ${id} not found`)
+            throw new NotFoundException(`Task with task id: ${id} not found`);
         }
 
         if (task.ownerId !== userId) {
-            throw new ForbiddenException("You do not have permissions to see this task")
+            this.logger.log(`You do not have permission to see task with task id ${id}`)
+            throw new ForbiddenException(`You do not have permission to see task with task id ${id}`);
         }
         return task;
     }
@@ -45,11 +49,13 @@ export class TasksService {
         });
 
         if (!task) {
-            throw new NotFoundException('Task not found');
+            this.logger.log(`Task with task id: ${id} not found`)
+            throw new NotFoundException(`Task with task id: ${id} not found`);
         }
 
         if (task.ownerId !== userId) {
-            throw new ForbiddenException('You do not have permission to edit this task');
+            this.logger.log(`You do not have permission to edit task with task id ${id}`)
+            throw new ForbiddenException(`You do not have permission to edit task with task id ${id}`);
         }
 
         if (updateTaskDto.dueDate) {
@@ -59,7 +65,8 @@ export class TasksService {
         Object.assign(task, updateTaskDto);
 
         await this.tasksRepository.save(task);
-        
+
+        this.logger.log(`Task edited successfully ${task}`)
         return task;
     }
 }

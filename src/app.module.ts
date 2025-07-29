@@ -4,10 +4,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TasksModule } from './tasks/tasks.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import path from 'node:path';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
+        ConfigModule.forRoot({
+            isGlobal: true,
+        }),
         TypeOrmModule.forRoot({
             type: 'sqlite',
             database: 'db/db.sqlite',
@@ -20,4 +23,4 @@ import path from 'node:path';
     controllers: [AppController],
     providers: [],
 })
-export class AppModule {}
+export class AppModule { }

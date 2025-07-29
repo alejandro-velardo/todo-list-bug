@@ -18,7 +18,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "avelardo@bibops.com",
+  "email": "avelardo22@bibops.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps"
 }
 
@@ -99,8 +99,8 @@ POST http://localhost:3000/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardo@bibops.com",
-  "pass": "1234",
+  "email": "avelardo22@bibops.com",
+  "pass": "@Th3P4ssw0rdF0rB1b0ps",
   "fullname": "Alejandro Velardo Lucero"
 }
 
@@ -110,7 +110,7 @@ POST http://localhost:3000/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardo@bibops.com",
+  "email": "avelardo22@bibops.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps"
 }
 
