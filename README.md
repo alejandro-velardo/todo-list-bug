@@ -58,18 +58,20 @@ Sigue estos pasos para levantar el proyecto y probarlo:
    ```bash
    yarn ts-node --files scripts/hash-user-passwords.ts
    ```
+5. **Creau un archivo `.env` con las variables `PORT` y `SECRET`, y si qse quiere usar el microservicio de notificaciones al registrar usuario `MAILER_PASS`, `MAILER_USER` (si no no funcionará)**
 
-5. **Levanta el servidor de RabbitMQ (asume que tienes docker instalado y activado)**
+
+6. **Levanta el servidor de RabbitMQ (asume que tienes docker instalado y activado)**
    ```bash
    docker run -d --hostname rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
    ```
    Si ya tenías el contenedor: `docker start rabbit`
 
-6. **Arranca el servidor**  
+7. **Arranca el servidor**  
    Inicia el proyecto con:
    ```bash
    yarn start
    ```
 
-7. **Lanza peticiones en test.http**  
+8. **Lanza peticiones en test.http**  
    Ya puedes empezar a lanzar peticiones predeifinidad del archivo `test.http`. Asume que tienes la extensión de VSCode REST Client.
