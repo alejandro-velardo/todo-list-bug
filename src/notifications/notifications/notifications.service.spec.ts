@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotificationsService } from './notifications.service';
-import { MailerService } from '../mailer/mailer.service'; // importa MailerService
+import { MailerService } from '../mailer/mailer.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('NotificationsService', () => {
   let service: NotificationsService;
@@ -9,7 +10,17 @@ describe('NotificationsService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         NotificationsService,
-        MailerService, 
+        MailerService,
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              if (key === 'MAILER_USER') return 'testuser@gmail.com';
+              if (key === 'MAILER_PASS') return 'testpass';
+              return null;
+            }),
+          },
+        },
       ],
     }).compile();
 
