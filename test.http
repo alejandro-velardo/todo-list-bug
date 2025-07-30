@@ -1,12 +1,19 @@
-### This is a test file that assumes that you have access to tthe data base. To see and edit  
-### a user's tasks  you will need correct credentials from the database. You can create a new user,
-## but since it won't have tasks assciated you won't be able to use its access token to see or edit their 
-##tasks.
+### This is a test file that assumes that you have access to the data base. To see and edit  
+### a user's tasks  you will need correct credentials from the database. 
+### Paste correct credentials in the variables validEmail and validPass from DB.
 
+### You can create a new user,  but since it won't have tasks assciated, you won't
+### be able to use its access token to see or edit their tasks.
+### edit new user credentials in the variables newUserEmail, newUserPass and newUserFullName
 
 @baseUrl = http://localhost:5005
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5YmY1MDliLTAxYzUtNDFkYy1iMWVmLWY5ODRlYjU1MWM4ZCIsImVtYWlsIjoiZXN0ZXJfdmFsbGFkYXJlc2FiZXl0YUBnbWFpbC5jb20iLCJpYXQiOjE3NTM4NTk5MTgsImV4cCI6MTc1Mzg2MzUxOH0.gPJkrtPvRDeAdumz1iKKRt7MJxEdTZxjs5UyYYa4S4k
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5YmY1MDliLTAxYzUtNDFkYy1iMWVmLWY5ODRlYjU1MWM4ZCIsImVtYWlsIjoiZXN0ZXJfdmFsbGFkYXJlc2FiZXl0YUBnbWFpbC5jb20iLCJpYXQiOjE3NTM4NjU1MTEsImV4cCI6MTc1Mzg2OTExMX0.YX2keky9VVsku1sht16hEsb07cP-UkAON7KkynW3MYA
 @taskId = 3b05d521-501a-4973-a12e-73f210fbaf2d
+@validEmail = "ester_valladaresabeyta@gmail.com"
+@validPass = "ZGygwZJWpjkpH5_"
+@newUserEmail =  "testNewUser0@gmail.com"
+@newUserPass = "@ValidNewPassword1234"
+@newUserFullName = "John Doe"
 
 ### Canary
 GET {{baseUrl}}
@@ -27,7 +34,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "ester_valladaresabeyta@gmail.com",
+  "email": {{validEmail}},
   "pass": ""
 }
 
@@ -48,11 +55,11 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "ester_valladaresabeyta@gmail.com",
-  "pass": "ZGygwZJWpjkpH5_"
+  "email": {{validEmail}},
+  "pass": {{validPass}}
 }
 
-### Successful Get user's task
+### Successful Get user's tasks
 ### Get a task Id and paste it a the top of the 
 ### file variable
 
@@ -90,7 +97,7 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "title": "This is test",
+  "title": "This is a test",
   "description": "This is a test to update a task that should be authorized by the backend"
 }
 
@@ -141,19 +148,19 @@ POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "1234567@bibops.com",
+  "email": {{newUserEmail}},
   "pass": "1234",
-  "fullname": "John Doe"
+  "fullname": {{newUserFullName}}
 }
 
-### Create a new user: bad dto fullname
+### Create a new user: no dto fullname
 
 POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "1234567@bibops.com",
-  "pass": "@Th3P4ssw0rdF0rB1b0ps"
+  "email": {{newUserEmail}},
+  "pass": {{newUserPass}}
 }
 
 ### Create a new user: bad dto email
@@ -161,9 +168,9 @@ POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardobibops.com",
-  "pass": "@Th3P4ssw0rdF0rB1b0ps",
-  "fullname": "John Doe"
+  "email": "notanemail",
+  "pass": {{newUserPass}},
+  "fullname": {{newUserFullName}}
 }
 
 ### Successful Create a new user
@@ -171,9 +178,9 @@ POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "1234@gmail.com",
-  "pass": "@Th3P4ssw0rdF0rB1b0ps",
-  "fullname": "John Doe"
+  "email": {{newUserEmail}},
+  "pass": {{newUserPass}},
+  "fullname": {{newUserFullName}}
 }
 
 ### Create a new user: repeated email
@@ -181,9 +188,20 @@ POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "1234@gmail.com",
-  "pass": "@Th3P4ssw0rdF0rB1b0ps",
-  "fullname": "John Doe"
+  "email": {{newUserEmail}},
+  "pass": {{newUserPass}},
+  "fullname": {{newUserFullName}}
 }
+
+### Successful ogin newUser
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": {{newUserEmail}},
+  "pass": {{newUserPass}}
+}
+
+
 
 
