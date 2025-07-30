@@ -11,7 +11,7 @@
 @taskId = 3b05d521-501a-4973-a12e-73f210fbaf2d
 @validEmail = "ester_valladaresabeyta@gmail.com"
 @validPass = "ZGygwZJWpjkpH5_"
-@newUserEmail =  "testNewUser0@gmail.com"
+@newUserEmail =  "avelardo@xtec.cat"
 @newUserPass = "@ValidNewPassword1234"
 @newUserFullName = "John Doe"
 

@@ -30,7 +30,7 @@ export class MailerService {
             to: email,
             subject: 'Bienvenido a Mi App',
             text: 'Gracias por registrarte en Mi App!',
-            html: '<b>Gracias por registrarte en Mi App!</b> hola laura soy el ales haciendo pruebas',
+            html: '<b>Gracias por registrarte en Mi App!</b>',
         };
 
         try {
