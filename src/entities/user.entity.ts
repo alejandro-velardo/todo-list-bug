@@ -12,7 +12,6 @@ export class User {
     @Column({unique: true})
     email: string;
 
-    // Por motivos de simplicidad, vamos a guardar la contraseña en texto plano
     @Column()
     pass: string;
 
