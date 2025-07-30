@@ -36,6 +36,8 @@ Sigue estos pasos para levantar el proyecto y probarlo:
 
 0. **Clona el repositorio**
 
+   git clone https://github.com/alejandro-velardo/todo-list-bug.git
+
 1. **Instala las dependencias**  
    Asegúrate de tener instaladas todas las dependencias necesarias ejecutando:
    ```bash
