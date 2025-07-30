@@ -35,37 +35,41 @@ Se ha implementadoun microservicio usando RabbitMQ y Nodemailer, como PoC, que e
 Sigue estos pasos para levantar el proyecto y probarlo:
 
 0. **Clona el repositorio**
-
+    ```bash
    git clone https://github.com/alejandro-velardo/todo-list-bug.git
-
-1. **Instala las dependencias**  
+    ```
+1. **Cambia a la rama debug-refactor**
+    ```bash
+   git checkout debug-refactor
+    ```
+2. **Instala las dependencias**  
    Asegúrate de tener instaladas todas las dependencias necesarias ejecutando:
    ```bash
    yarn install
    ```
 
-2. **Inicializa la base de datos**
+3. **Inicializa la base de datos**
    Una vez que hayas instalado las dependencias ejecuta el comando para inicializar la base de datos:
    ```bash
    yarn migrations:run
    ```
 
-3. **Ejecuta el hasheo de las contraseñas en base de datos**
+4. **Ejecuta el hasheo de las contraseñas en base de datos**
    ```bash
    yarn ts-node --files scripts/hash-user-passwords.ts
    ```
 
-4. **Levanta el servidor de RabbitMQ (asume que tienes docker instalado y activado)**
+5. **Levanta el servidor de RabbitMQ (asume que tienes docker instalado y activado)**
    ```bash
    docker run -d --hostname rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
    ```
    Si ya tenías el contenedor: `docker start rabbit`
 
-5. **Arranca el servidor**  
+6. **Arranca el servidor**  
    Inicia el proyecto con:
    ```bash
    yarn start
    ```
 
-6. **Lanza peticiones en test.http**  
+7. **Lanza peticiones en test.http**  
    Ya puedes empezar a lanzar peticiones predeifinidad del archivo `test.http`. Asume que tienes la extensión de VSCode REST Client.
