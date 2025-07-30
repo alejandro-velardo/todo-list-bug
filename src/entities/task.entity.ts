@@ -29,6 +29,6 @@ import {
     owner: User;
   
     @Column()
-    ownerId: string;  // Esto permite hacer queries directas sin cargar toda la entidad owner
+    ownerId: string; 
   }
   
