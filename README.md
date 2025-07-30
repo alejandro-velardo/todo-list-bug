@@ -1,54 +1,34 @@
 
-# 📝 ** Qué se ha cambiado ? ** 🔒
+# 📝 Qué se ha cambiado ? 🔒
 
 Tras un repaso del proyecto, se han podido hacer diversos cambios en diversos sentidos:
 
-**Protección**
-Se han protegido los endpoints de ´GET /tasks´, ´GET /task/:id´, ´PUT /task/:id´ (se ha cambiado la lógica del endpoint y el tipo de POST a PUT - más convencional) mediante el uso de guards de Nest.
+#### **Protección**
+Se han protegido los endpoints de `GET /tasks`, `GET /task/:id`, `PUT /task/:id` (se ha cambiado la lógica del endpoint y el tipo de POST a PUT - más convencional) mediante el uso de guards de Nest.
 
-Ahora el endpoint ´GET /tasks´ solo devuelve las contraseñas del usuario validado.
-´GET /task/:id´, ´PUT /task/:id´ solo permiten consultar y hacer cambios al usuario si tiene un token valido.
+Ahora el endpoint `GET /tasks` solo devuelve las contraseñas del usuario validado.
+`GET /task/:id`, `PUT /task/:id` solo permiten consultar y hacer cambios al usuario si tiene un token valido.
 
  
-**Autenticación con JWT**
+#### **Autenticación con JWT**
 Se reemplazó la constante jwtConstants.secret por una lectura desde ConfigService para evitar hardcodeo y facilitar la configuración por entorno. Se ha borrado el archivo constants.ts.
 
 
-**Mejorar el manejo de errores**
-Se han añadido nuevos tipos de excepciones a la capa de servicios  y se han añadido archivos con DTOs para validar los cuerpos de las solicitudes HTTP, con mensajes de error predeterminado según el tipo de fallo.
+#### **Mejorar el manejo de errores**
+Se han añadido nuevos tipos de excepciones a la capa de servicios y se han añadido archivos con DTOs para validar los cuerpos de las solicitudes HTTP, con mensajes de error predeterminado según el tipo de fallo.
 
-También se han añadido otro tipo de logs.
+También se han añadido otro tipo de logs ante errores y se ha usado el tipo de error adecuado en cada caso.
 
-**Auditoría general de seguridad**
-Se han retirado variables sensibles del codigo del proyecto guardandolas usando ConfigService. Se ha añadaido un script para hashear todas las contraseñas de base de datos usando bcrypt, y se ha cambiado el metodo de crear un usuario para nunca guardar una contraseña en texto plano en base de datos. 
-Se ha forzado el uso de contraseñas más seguras para el registro.
+#### **Auditoría general de seguridad**
+Se han retirado variables sensibles del codigo del proyecto guardandolas usando ConfigService. Se ha añadaido un script para hashear todas las contraseñas de base de datos usando bcrypt, y se ha cambiado el metodo de crear un usuario para no guardar una contraseña en texto plano en base de datos -  más seguro.
+Se ha forzado el uso de contraseñas más seguras (16 carácteres, mayus/minus y chars. especiales) para el registro.
 
-**Otros**
+#### **Otros**
 Se han cambiado los tests , cuando ha sido necesario, para que pasaran una vez implementados estos cambios. Se ha añadido un archivo test.http para probar la API. 
 
-**Bonus PoC**
+#### **Bonus PoC**
 Se ha implementadoun microservicio usando RabbitMQ y Nodemailer, como PoC, que envia un correo al usuario tras su registro. 
 
----
-
-## 🎯 **Objetivos**
-
-Tu misión consiste en completar los siguientes objetivos:
-
-1. **Protección de las tareas por usuario**: Actualmente, cualquier usuario puede ver el detalle de una tarea, incluso si no le pertenece. Deberás corregir esto para asegurarte de que **solo el propietario** de una tarea pueda verla.
-
-2. **Restringir la edición de tareas**: Actualmente, cualquier usuario puede editar las tareas de otros. Corrige esta funcionalidad para que solo los propietarios puedan editar sus propias tareas.
-
-3. **Autenticación con JWT**: La autenticación mediante JWT funciona, pero no se verifica adecuadamente en algunos endpoints. Asegúrate de que todas las rutas sensibles estén correctamente protegidas y requieran un **token JWT** válido.
-
-4. **Mejorar el manejo de errores**: Debes asegurarte de que, cuando se intente acceder o editar una tarea sin los permisos necesarios, el sistema devuelva el error adecuado (p. ej., **403 Forbidden**). Explora también otros errores que puedan ocurrir por casos extremos.
-
-5. **Mejorar logs y mensajes de error**: Añade mensajes de error y logs más descriptivos para facilitar la depuración y el mantenimiento del código.
-
-6. **Auditoría general de seguridad**: Realiza una auditoría general del código y busca cualquier otro posible fallo de seguridad o funcional que debas corregir.
-
-> IMPORTANTE: No tomes estos objetivos como los únicos a cumplir. Todas las mejoras que puedas aportar para asegurar la seguridad y el correcto funcionamiento de la aplicación serán bienvenidas.
----
 
 ## 🚀 **Cómo probarlo**
 
@@ -84,8 +64,4 @@ Sigue estos pasos para levantar el proyecto y probarlo:
    ```
 
 6. **Lanza peticiones en test.http**  
-   Ya puedes empezar a lanzar peticiones predeifinidad del archivo `test.http`. Asume que tienes la extensión de VSCode REST Client. No olvides cambiar el puerto y el nuevo token, una vez obtenidos.
-
----
-
-¡Listo! Ahora puedes empezar a trabajar en los errores y enviar tu contribución para asegurar que la aplicación funcione correctamente y sin vulnerabilidades.
+   Ya puedes empezar a lanzar peticiones predeifinidad del archivo `test.http`. Asume que tienes la extensión de VSCode REST Client.
