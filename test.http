@@ -193,7 +193,7 @@ Content-Type: application/json
   "fullname": {{newUserFullName}}
 }
 
-### Successful ogin newUser
+### Successful login newUser
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
