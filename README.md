@@ -34,6 +34,8 @@ Se ha implementadoun microservicio usando RabbitMQ y Nodemailer, como PoC, que e
 
 Sigue estos pasos para levantar el proyecto y probarlo:
 
+0. **Clona el repositorio**
+
 1. **Instala las dependencias**  
    Asegúrate de tener instaladas todas las dependencias necesarias ejecutando:
    ```bash
