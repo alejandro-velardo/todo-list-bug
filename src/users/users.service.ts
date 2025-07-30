@@ -39,7 +39,7 @@ export class UsersService {
         user.pass = await this.hashPassword(pass);
 
         await this.usersRepository.save(user);
-        this.logger.log(`User registered successufly: ${createUserDto}`)
+        this.logger.log(`User ${createUserDto.email} registered successufly.`)
         this.client.emit('user_created', email)
         return user;
     }

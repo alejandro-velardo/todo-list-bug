@@ -1,9 +1,33 @@
 
-# 📝 **TODO LIST: El misterio de las tareas desprotegidas** 🔒
+# 📝 ** Qué se ha cambiado ? ** 🔒
 
-Esta es una aplicación de TODO LIST en la que se gestionan tareas de usuarios. Sin embargo, hay algunos problemas y vulnerabilidades que necesitan ser corregidos para asegurar el funcionamiento correcto y la protección de los datos.
+Tras un repaso del proyecto, se han podido hacer diversos cambios en diversos sentidos:
 
-Tu objetivo es identificar y resolver los problemas en el código relacionados con la **autenticación**, **autorización** y la correcta asignación de permisos para gestionar las tareas.
+**Protección**
+Se han protegido los endpoints de ´GET /tasks´, ´GET /task/:id´, ´PUT /task/:id´ (se ha cambiado la lógica del endpoint y el tipo de POST a PUT - más convencional) mediante el uso de guards de Nest.
+
+Ahora el endpoint ´GET /tasks´ solo devuelve las contraseñas del usuario validado.
+´GET /task/:id´, ´PUT /task/:id´ solo permiten consultar y hacer cambios al usuario si tiene un token valido.
+
+ 
+**Autenticación con JWT**
+Se reemplazó la constante jwtConstants.secret por una lectura desde ConfigService para evitar hardcodeo y facilitar la configuración por entorno. Se ha borrado el archivo constants.ts.
+
+
+**Mejorar el manejo de errores**
+Se han añadido nuevos tipos de excepciones a la capa de servicios  y se han añadido archivos con DTOs para validar los cuerpos de las solicitudes HTTP, con mensajes de error predeterminado según el tipo de fallo.
+
+También se han añadido otro tipo de logs.
+
+**Auditoría general de seguridad**
+Se han retirado variables sensibles del codigo del proyecto guardandolas usando ConfigService. Se ha añadaido un script para hashear todas las contraseñas de base de datos usando bcrypt, y se ha cambiado el metodo de crear un usuario para nunca guardar una contraseña en texto plano en base de datos. 
+Se ha forzado el uso de contraseñas más seguras para el registro.
+
+**Otros**
+Se han cambiado los tests , cuando ha sido necesario, para que pasaran una vez implementados estos cambios. Se ha añadido un archivo test.http para probar la API. 
+
+**Bonus PoC**
+Se ha implementadoun microservicio usando RabbitMQ y Nodemailer, como PoC, que envia un correo al usuario tras su registro. 
 
 ---
 
@@ -26,31 +50,32 @@ Tu misión consiste en completar los siguientes objetivos:
 > IMPORTANTE: No tomes estos objetivos como los únicos a cumplir. Todas las mejoras que puedas aportar para asegurar la seguridad y el correcto funcionamiento de la aplicación serán bienvenidas.
 ---
 
-## 🚀 **Primeros pasos**
+## 🚀 **Cómo probarlo**
 
-Sigue estos pasos para levantar el proyecto y trabajar en las correcciones necesarias:
+Sigue estos pasos para levantar el proyecto y probarlo:
 
-1. **Realiza un Fork del repositorio**  
-   Primero, haz un fork del proyecto desde el repositorio original. Puedes hacerlo directamente desde la interfaz de GitHub haciendo clic en el botón de "Fork".
-
-2. **Clona el repositorio en tu máquina local**  
-   Clona el repositorio forkeado:
-   ```bash
-   git clone https://github.com/tu-usuario/todo-list-bug.git
-   cd todo-list-bug
-   ```
-
-3. **Instala las dependencias**  
+1. **Instala las dependencias**  
    Asegúrate de tener instaladas todas las dependencias necesarias ejecutando:
    ```bash
    yarn install
    ```
 
-4. **Inicializa la base de datos**
+2. **Inicializa la base de datos**
    Una vez que hayas instalado las dependencias ejecuta el comando para inicializar la base de datos:
    ```bash
    yarn migrations:run
    ```
+
+3. **Ejecuta el hasheo de las contraseñas en base de datos**
+   ```bash
+   yarn ts-node --files scripts/hash-user-passwords.ts
+   ```
+
+4. **Levanta el servidor de RabbitMQ (asume que tienes docker instalado y activado)**
+   ```bash
+   docker run -d --hostname rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+   ```
+   Si ya tenías el contenedor: `docker start rabbit`
 
 5. **Arranca el servidor**  
    Inicia el proyecto con:
@@ -58,8 +83,8 @@ Sigue estos pasos para levantar el proyecto y trabajar en las correcciones neces
    yarn start
    ```
 
-6. **Resuelve los bugs**  
-   Identifica y resuelve los problemas mencionados en los objetivos y cualquier otro que encuentres.
+6. **Lanza peticiones en test.http**  
+   Ya puedes empezar a lanzar peticiones predeifinidad del archivo `test.http`. Asume que tienes la extensión de VSCode REST Client. No olvides cambiar el puerto y el nuevo token, una vez obtenidos.
 
 ---
 

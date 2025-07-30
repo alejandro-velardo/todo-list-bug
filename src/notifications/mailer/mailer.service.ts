@@ -1,19 +1,27 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
+import { ConfigService } from '@nestjs/config';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 @Injectable()
 export class MailerService {
     private readonly logger = new Logger(MailerService.name);
-    private transporter;
+    private transporter: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
 
-    constructor() {
+
+    constructor(private configService: ConfigService) {
+        const mailer_pass = this.configService.get<number>('MAILER_PASS');
+        const mailer_user = this.configService.get<string>('MAILER_USER');
+
         this.transporter = nodemailer.createTransport({
-            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
             auth: {
-                user: 'u3097801912@gmail.com',
-                pass: 'papr oolz ecsi ygbk',
+                user: mailer_user,
+                pass: mailer_pass,
             },
-        });
+        } as SMTPTransport.Options);
     }
 
     async sendUserCreatedEmail(email: string) {

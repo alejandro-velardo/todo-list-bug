@@ -11,7 +11,6 @@ export class NotificationsService {
 
     @EventPattern('user_created')
     async handleUserCreated(@Payload() userEmail: string) {
-            console.log('📬 Event received: user_created');
         this.logger.log(`📩 Sending email to new user`)
         await this.mailer.sendUserCreatedEmail(userEmail);
     }

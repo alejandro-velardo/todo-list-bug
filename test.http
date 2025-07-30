@@ -1,12 +1,17 @@
+### This is a test file that assumes that you have access to tthe data base. To see and edit  
+### a user's tasks  you will need correct credentials from the database. You can create a new user,
+## but since it won't have tasks assciated you won't be able to use its access token to see or edit their 
+##tasks.
 
-@baseUrl = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5YmY1MDliLTAxYzUtNDFkYy1iMWVmLWY5ODRlYjU1MWM4ZCIsImVtYWlsIjoiZXN0ZXJfdmFsbGFkYXJlc2FiZXl0YUBnbWFpbC5jb20iLCJpYXQiOjE3NTM4MDU0NjgsImV4cCI6MTc1MzgwOTA2OH0.14UTEnMCvjGIcdVMVQOXqLJVlZYJJp_qkiXEaRnS5xw
-@taskId = 603fab3b-70fd-4948-9b80-8fa063395eaa
 
-### Normal GEt
+@baseUrl = http://localhost:5005
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImM5YmY1MDliLTAxYzUtNDFkYy1iMWVmLWY5ODRlYjU1MWM4ZCIsImVtYWlsIjoiZXN0ZXJfdmFsbGFkYXJlc2FiZXl0YUBnbWFpbC5jb20iLCJpYXQiOjE3NTM4NTk5MTgsImV4cCI6MTc1Mzg2MzUxOH0.gPJkrtPvRDeAdumz1iKKRt7MJxEdTZxjs5UyYYa4S4k
+@taskId = 3b05d521-501a-4973-a12e-73f210fbaf2d
+
+### Canary
 GET {{baseUrl}}
 
-### Failed Login: user not found
+### Failed Login: invalid mail adress
 
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
@@ -16,7 +21,7 @@ Content-Type: application/json
   "pass": "bar"
 }
 
-### Failed Login: invalid credentials
+### Failed Login: invalid password
 
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
@@ -35,7 +40,9 @@ Content-Type: application/json
   "pass": ""
 }
 
-### Get access token
+### Successful Login: Get access token
+### get the token from response and paste it 
+### at the top of the file variable
 
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
@@ -45,7 +52,9 @@ Content-Type: application/json
   "pass": "ZGygwZJWpjkpH5_"
 }
 
-### Get user's task
+### Successful Get user's task
+### Get a task Id and paste it a the top of the 
+### file variable
 
 GET {{baseUrl}}/tasks
 Authorization: Bearer {{token}}
@@ -65,18 +74,18 @@ Content-Type: application/json
 
 ### See a user's: task unauthorized
 
-GET http://localhost:3000/tasks/a6a0de01-514d-474d-99a6-076bb69d852d
+GET {{baseUrl}}/tasks/{{taskId}}
 Authorization: Bearer notAtoken
 Content-Type: application/json
 
 ### See a user's: task not found
 
-GET http://localhost:3000/tasks/1234
+GET {{baseUrl}}/tasks/1234
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-### Edit a user's task 
-PUT http://localhost:3000/tasks/{{taskId}}
+### Successful Edit a user's task 
+PUT {{baseUrl}}/tasks/{{taskId}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -86,7 +95,7 @@ Content-Type: application/json
 }
 
 ### Edit a user's task: bad input
-PUT http://localhost:3000/tasks/{{taskId}}
+PUT {{baseUrl}}/tasks/{{taskId}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -96,8 +105,19 @@ Content-Type: application/json
   "description": "This is a test to update a task that should be authorized by the backend"
 }
 
+### Edit a user's task: wrong dto
+PUT {{baseUrl}}/tasks/{{taskId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Alejandro",
+  "age": 13,
+  "course": "2B"
+}
+
 ### Edit a user's task: unauthorized
-PUT http://localhost:3000/tasks/{{taskId}}
+PUT {{baseUrl}}/tasks/{{taskId}}
 Authorization: Bearer notAToken
 Content-Type: application/json
 
@@ -107,7 +127,7 @@ Content-Type: application/json
 }
 
 ### Edit a user's task: not found
-PUT http://localhost:3000/tasks/notAnId
+PUT {{baseUrl}}/tasks/notAnId
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -117,53 +137,53 @@ Content-Type: application/json
 }
 
 ### Create a new user: too simple password
-POST http://localhost:3000/users/create
+POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardo22@bibops.com",
+  "email": "1234567@bibops.com",
   "pass": "1234",
-  "fullname": "Alejandro Velardo Lucero"
+  "fullname": "John Doe"
 }
 
 ### Create a new user: bad dto fullname
 
-POST http://localhost:3000/users/create
+POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardo22@bibops.com",
+  "email": "1234567@bibops.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps"
 }
 
 ### Create a new user: bad dto email
-POST http://localhost:3000/users/create
+POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
   "email": "avelardobibops.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps",
-  "fullname": "Alejandro Velardo Lucero"
+  "fullname": "John Doe"
 }
 
-### Create a new user
+### Successful Create a new user
 POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "@gmail.com",
+  "email": "1234@gmail.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps",
-  "fullname": "Alejandro Velardo Lucero"
+  "fullname": "John Doe"
 }
 
 ### Create a new user: repeated email
-POST http://localhost:3000/users/create
+POST {{baseUrl}}/users/create
 Content-Type: application/json
 
 {
-  "email": "avelardo@bibops.com",
+  "email": "1234@gmail.com",
   "pass": "@Th3P4ssw0rdF0rB1b0ps",
-  "fullname": "Alejandro Velardo Lucero"
+  "fullname": "John Doe"
 }
 
 
